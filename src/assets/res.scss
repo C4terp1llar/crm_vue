@@ -1,0 +1,27 @@
+@mixin flexbox($display: flex, $justify-content: center, $align-items: center, $flex-direction: row) {
+  display: $display;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-direction: $flex-direction;
+}
+
+$color1: #2E86AB; // Темно-голубой
+$color2: #F39237; // Оранжевый
+$color3: #8FC1E3; // Светло-голубой
+$color4: #F9C80E; // Жёлтый
+$color5: #F4845F; // Розовый
+$color6: #A593E0; // Фиолетовый
+$color7: #0085A1; // Темно-циановый
+$color8: #FD7272; // Красный
+$color9: #52B788; // Зелёный
+$color10: #FEB2A4; // Светло-розовый
+
+$padding-small: 10px;
+$padding-medium: 25px;
+$padding-large: 50px;
+
+$gap-small: 10px;
+$gap-medium: 25px;
+$gap-large: 50px;
+
+$radius: 10px;

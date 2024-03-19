@@ -1,30 +1,49 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <component :is="stage">
+    <router-view
+
+    />
+  </component>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import EmptyLayout from "@/layouts/EmptyLayout.vue";
+import MainLayout from "@/layouts/MainLayout.vue";
+import {useRoute} from "vue-router";
+import {computed} from "vue";
 
-nav {
-  padding: 30px;
+export default {
+  setup(){
+    const route = useRoute();
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+    const stage = computed(() => {
+      return (route.name || 'empty') + '-layout'
+    });
 
-    &.router-link-exact-active {
-      color: #42b983;
+    return{
+      stage
     }
-  }
+  },
+  components: {EmptyLayout, MainLayout}
+}
+</script>
+
+<style lang="scss">
+@import "assets/res";
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body{
+  width: 100%;
+  height: 100%;
+}
+#app{
+  width: 100%;
+  height: 100%;
+  background-color: $color10;
+  @include flexbox(flex,center,center,row);
 }
 </style>

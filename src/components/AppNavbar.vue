@@ -7,9 +7,8 @@ const actionModel = ref(null);
 const router = useRouter();
 const store = useStore()
 
-const userName = computed(() => {
-  return store.getters["auth/getUserName"];
-})
+const { displayName = '', email = '' } = store.getters["auth/getUserInfo"];
+
 
 const handleAction = (action) => {
   if (action === 'profile') {
@@ -24,10 +23,15 @@ const handleAction = (action) => {
 
 <template>
   <nav>
-    <h1>smth</h1>
-    <div>
+    <div class="logo">
+      <img src="../assets/logo.svg" alt="logo">
+      <router-link to="/home"/>
+    </div>
+    <div class='wrap'>
       <select v-model="actionModel" @change="handleAction(actionModel)">
-        <option :value="null" disabled selected class="user">{{ userName }}</option>
+        <option :value="null" disabled selected class="user">
+          {{email}} {{email && displayName ? '|' : ''}} {{displayName }}
+        </option>
         <option value="profile">Профиль</option>
         <option class="logout" value="logout">Выйти</option>
       </select>
@@ -44,7 +48,7 @@ nav {
   background-color: $color8;
   padding: $padding-large;
   @include flexbox(flex, space-between, center, row);
-  div {
+  .wrap {
     position: relative;
     @include flexbox(flex, unset, center, row);
     select {
@@ -76,6 +80,18 @@ nav {
       right: 0;
       cursor: pointer;
       font-weight: bold;
+    }
+  }
+  .logo{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    a{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
   }
 }

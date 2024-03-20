@@ -18,7 +18,7 @@ const valid = computed(() => {
 async function handleSubmit() {
   try {
     await store.dispatch('auth/register', {email: login.value, password: password.value, name: name.value});
-    await router.push('auth');
+    await router.push('/home');
     sendAlert('Регистрация успешна!', 'success');
   }catch (e){
     sendAlert('Пользователь с таким email уже существует', 'error');

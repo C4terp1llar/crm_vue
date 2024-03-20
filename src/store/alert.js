@@ -12,7 +12,11 @@ export default {
             state.type = payload.type;
             setTimeout(() => {
                 state.isVisible = false;
-            }, 2500)
+            }, 3000)
+            setTimeout(() => {
+                state.message = '';
+                state.type = '';
+            }, 3500)
         }
     },
 }

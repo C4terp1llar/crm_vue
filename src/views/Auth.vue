@@ -20,7 +20,7 @@ async function handleSubmit() {
     await router.push('/home');
     sendAlert('Авторизация успешна!', 'success');
   } catch (e) {
-    sendAlert(e.message, 'error');
+    sendAlert('Неверный email или пароль', 'error');
     console.error(e.message);
   }
 }

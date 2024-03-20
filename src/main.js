@@ -9,6 +9,7 @@ import {getAuth} from 'firebase/auth';
 const firebaseConfig = {
     apiKey: "AIzaSyCgf0ZvUnYyAsrkkgnbQxLec-IIrTf3p0s",
     authDomain: "crm--vue-3.firebaseapp.com",
+    databaseURL: "https://crm--vue-3-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "crm--vue-3",
     storageBucket: "crm--vue-3.appspot.com",
     messagingSenderId: "545386863832",

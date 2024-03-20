@@ -1,31 +1,11 @@
 <template>
-  <component :is="stage">
-    <router-view
-
-    />
-  </component>
+  <router-view/>
+  <app-alert />
 </template>
 
-<script>
-import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import MainLayout from "@/layouts/MainLayout.vue";
-import {useRoute} from "vue-router";
-import {computed} from "vue";
+<script setup>
 
-export default {
-  setup(){
-    const route = useRoute();
-
-    const stage = computed(() => {
-      return (route.name || 'empty') + '-layout'
-    });
-
-    return{
-      stage
-    }
-  },
-  components: {EmptyLayout, MainLayout}
-}
+import AppAlert from "@/components/AppAlert.vue";
 </script>
 
 <style lang="scss">

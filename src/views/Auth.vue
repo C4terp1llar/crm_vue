@@ -1,31 +1,44 @@
-<script>
-import {ref} from "vue";
+<script setup>
+import {computed, ref} from "vue";
+import {useStore} from 'vuex';
+import {useRouter} from "vue-router";
+import {sendAlert} from "@/helpers/alertHelper";
 
-export default {
-  setup(){
-    const login = ref(null);
-    const password = ref(null);
-    const handleSubmit = () =>{
+const login = ref(null);
+const password = ref(null);
 
-    }
-    return{
-      handleSubmit,login,
-      password
-    }
+const store = useStore();
+const router = useRouter();
+
+const valid = computed(() => {
+  return !(login.value && password.value && password.value.length >= 6)
+});
+
+async function handleSubmit() {
+  try {
+    await store.dispatch('auth/login', {email: login.value, password: password.value})
+    await router.push('/home');
+    sendAlert('Авторизация успешна!', 'success');
+  } catch (e) {
+    sendAlert(e.message, 'error');
+    console.error(e.message);
   }
 }
 </script>
 
+
 <template>
   <h1>Авторизация</h1>
   <form @submit.prevent="handleSubmit">
-    <label for="login">Введите логин:</label>
-    <input id="login" type="text" v-model.trim="login">
+    <label for="login">Введите email:</label>
+    <input id="login" type="email" v-model.trim="login">
     <label for="password">Введите пароль:</label>
-    <input id="password" type="text" v-model.trim="password">
-    <button type="submit">Войти</button>
+    <input minlength="6" id="password" type="password" v-model.trim="password">
+    <button type="submit" :disabled="valid">Войти</button>
   </form>
-  <p>Нет аккаунта? <router-link to="/reg">Регистрация</router-link></p>
+  <p>Нет аккаунта?
+    <router-link class="default-link" to="reg">Регистрация</router-link>
+  </p>
 </template>
 
 <style scoped lang="scss">
@@ -34,15 +47,22 @@ export default {
 form {
   @include flexbox(flex, unset, unset, column);
   gap: 5px;
-  input,button{
+
+  input, button {
     padding: 5px;
     border-radius: 5px;
   }
-  button{
+
+  button {
     cursor: pointer;
   }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
-p{
+
+p {
   margin-top: 10px;
 }
 </style>

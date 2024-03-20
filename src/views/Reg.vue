@@ -1,12 +1,28 @@
-<script>
-export default {
-  setup(){
-    const handleSubmit = () =>{
+<script setup>
+import {computed, ref} from "vue";
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
+import {sendAlert} from "@/helpers/alertHelper";
 
-    }
-    return{
-      handleSubmit
-    }
+const login = ref(null);
+const password = ref(null);
+const name = ref(null);
+
+const store = useStore();
+const router = useRouter();
+
+const valid = computed(() => {
+  return !(login.value && password.value && password.value.length >= 6)
+});
+
+async function handleSubmit() {
+  try {
+    await store.dispatch('auth/register', {email: login.value, password: password.value, name: name.value});
+    await router.push('auth');
+    sendAlert('Регистрация успешна!', 'success');
+  }catch (e){
+    sendAlert('Пользователь с таким email уже существует', 'error');
+    console.error(e.message);
   }
 }
 </script>
@@ -14,13 +30,17 @@ export default {
 <template>
   <h1>Регистрация</h1>
   <form @submit.prevent="handleSubmit">
-    <label for="login">Введите логин:</label>
-    <input id="login" type="text">
+    <label for="name">Введите имя:</label>
+    <input id="name" maxlength="20" v-model.trim="name" type="text">
+    <label for="login">Введите email:</label>
+    <input id="login" v-model.trim="login" type="email">
     <label for="password">Введите пароль:</label>
-    <input id="password" type="text">
-    <button type="submit">Зарегистрироваться</button>
+    <input minlength="6" id="password" v-model.trim="password" type="password">
+    <button :disabled="valid" type="submit">Зарегистрироваться</button>
   </form>
-  <p><router-link to="/">К авторизации</router-link></p>
+  <p>
+    <router-link class="default-link" to="auth">К авторизации</router-link>
+  </p>
 </template>
 
 <style scoped lang="scss">
@@ -29,15 +49,22 @@ export default {
 form {
   @include flexbox(flex, unset, unset, column);
   gap: 5px;
-  input,button{
+
+  input, button {
     padding: 5px;
     border-radius: 5px;
   }
-  button{
+
+  button {
     cursor: pointer;
   }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
-p{
+
+p {
   margin-top: 10px;
 }
 </style>

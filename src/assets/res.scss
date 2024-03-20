@@ -16,6 +16,9 @@ $color8: #FD7272; // Красный
 $color9: #52B788; // Зелёный
 $color10: #FEB2A4; // Светло-розовый
 
+$default-link-color:  #333;
+$active-link-color: darkred;
+
 $padding-small: 10px;
 $padding-medium: 25px;
 $padding-large: 50px;
@@ -25,3 +28,15 @@ $gap-medium: 25px;
 $gap-large: 50px;
 
 $radius: 10px;
+
+.active-link{
+  color: $active-link-color;
+  text-decoration: underline;
+}
+a{
+  text-decoration: none;
+  color: $default-link-color;
+}
+a:hover{
+  text-decoration: underline;
+}

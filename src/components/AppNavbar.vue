@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from "vue";
+import {ref} from "vue";
 import { useRouter } from "vue-router";
 import {useStore} from "vuex";
 
@@ -7,8 +7,7 @@ const actionModel = ref(null);
 const router = useRouter();
 const store = useStore()
 
-const { displayName = '', email = '' } = store.getters["auth/getUserInfo"];
-
+const info = store.getters["info/getUserInfo"];
 
 const handleAction = (action) => {
   if (action === 'profile') {
@@ -16,7 +15,7 @@ const handleAction = (action) => {
     actionModel.value = null;
   } else if (action === 'logout') {
     router.push('/');
-    store.commit('auth/logout');
+    store.commit('logout');
   }
 }
 </script>
@@ -30,7 +29,7 @@ const handleAction = (action) => {
     <div class='wrap'>
       <select v-model="actionModel" @change="handleAction(actionModel)">
         <option :value="null" disabled selected class="user">
-          {{email}} {{email && displayName ? '|' : ''}} {{displayName }}
+          {{info.email}} {{info.email && info.name ? '|' : ''}} {{info.name }}
         </option>
         <option value="profile">Профиль</option>
         <option class="logout" value="logout">Выйти</option>

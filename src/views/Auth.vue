@@ -3,6 +3,7 @@ import {computed, ref} from "vue";
 import {useStore} from 'vuex';
 import {useRouter} from "vue-router";
 import {sendAlert} from "@/helpers/alertHelper";
+import AppLoader from "@/components/AppLoader.vue";
 
 const login = ref(null);
 const password = ref(null);
@@ -10,18 +11,24 @@ const password = ref(null);
 const store = useStore();
 const router = useRouter();
 
+const isLoading = ref(false);
+
 const valid = computed(() => {
   return !(login.value && password.value && password.value.length >= 6)
 });
 
 async function handleSubmit() {
   try {
+    isLoading.value = true;
+
     await store.dispatch('auth/login', {email: login.value, password: password.value})
     await router.push('/home');
     sendAlert('Авторизация успешна!', 'success');
   } catch (e) {
     sendAlert('Неверный email или пароль', 'error');
     console.error(e.message);
+  }finally {
+    isLoading.value = false;
   }
 }
 </script>
@@ -34,7 +41,14 @@ async function handleSubmit() {
     <input id="login" type="email" v-model.trim="login">
     <label for="password">Введите пароль:</label>
     <input minlength="6" id="password" type="password" v-model.trim="password">
-    <button type="submit" :disabled="valid">Войти</button>
+    <button type="submit" :disabled="valid || isLoading">
+      <template v-if="isLoading">
+        <app-loader/>
+      </template>
+      <template v-else>
+        Войти
+      </template>
+    </button>
   </form>
   <p>Нет аккаунта?
     <router-link class="default-link" to="reg">Регистрация</router-link>

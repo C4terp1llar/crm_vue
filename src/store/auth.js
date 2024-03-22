@@ -1,91 +1,66 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 import { auth } from "@/main";
-
-const TOKEN_KEY = 'auth_token';
+import info from "@/store/info";
 
 export default {
     namespaced: true,
     state:{
-        currentUser: JSON.parse(sessionStorage.getItem('currentUser')) ,
-        currentUserId: sessionStorage.getItem('uid'),
-        authToken: sessionStorage.getItem(TOKEN_KEY)
+        authToken: sessionStorage.getItem('auth_token')
     },
     actions: {
-        async login(context, payload) {
+        async login({ commit, rootState, dispatch}, payload) {
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, payload.email, payload.password);
 
-                const user = userCredential.user;
+                commit('setUserId', userCredential.user.uid, { root: true });
 
-                context.commit('setUser', user);
+                const token = await userCredential.user.getIdToken();
+                commit('setAuthToken', token);
 
-                context.commit('setUserId', user.uid);
-
-                const token = await user.getIdToken();
-                context.commit('setAuthToken', token);
-
+                await dispatch('info/getUserInfoFromDb');
             } catch (error) {
                 throw error;
             }
         },
-        async register(context, payload){
+        async register({ commit, dispatch, rootState }, payload){
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, payload.email, payload.password);
                 await updateProfile(userCredential.user, { displayName: payload.name });
 
-                context.commit('setUser', userCredential.user);
-                context.commit('setUserId', userCredential.user.uid);
-                context.commit('setAuthToken', await userCredential.user.getIdToken());
+                commit('setUserId', userCredential.user.uid, { root: true });
 
-                await context.dispatch('setUserInfoToDb', payload.name);
+                commit('setAuthToken', await userCredential.user.getIdToken());
+
+                await dispatch('setUserInfoToDb', payload);
+                await dispatch('info/getUserInfoFromDb');
             } catch (e) {
                 throw e;
             }
         },
-        async setUserInfoToDb(context, name) {
+        async setUserInfoToDb({ rootState }, {name, email}) {
             try {
                 const db = getDatabase();
-                const userId = context.state.currentUserId;
-                await set(ref(db, `users/${userId}/name`), name);
+
+                await set(ref(db, `users/${rootState.currentUserId}/info/name`), name);
+                await set(ref(db, `users/${rootState.currentUserId}/info/email`), email);
             } catch (e) {
                 throw e;
             }
         }
     },
     mutations: {
-        logout(state){
-            state.currentUser = null;
-            sessionStorage.removeItem('currentUser');
-
-            state.authToken = null;
-            sessionStorage.removeItem(TOKEN_KEY);
-
-            state.currentUserId = null;
-            sessionStorage.removeItem('uid');
-        },
-        setUser(state, user){
-            state.currentUser = user;
-            sessionStorage.setItem('currentUser', JSON.stringify(user));
-        },
-        setUserId(state, id){
-            state.currentUserId = id;
-            sessionStorage.setItem('uid', id);
-        },
         setAuthToken(state, token) {
             state.authToken = token;
-            sessionStorage.setItem(TOKEN_KEY, token);
+            sessionStorage.setItem('auth_token', token);
         }
     },
     getters: {
-        getUserInfo(state){
-            return state.currentUser;
-        },
-        getUserId(state){
-            return state.currentUserId;
-        },
         getToken(state) {
             return state.authToken;
         }
+    },
+    modules: {
+        info
     }
 }

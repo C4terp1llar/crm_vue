@@ -21,7 +21,8 @@ import AppAside from "@/components/AppAside.vue";
   grid-template-rows: 100px 1fr;
   grid-template-columns: 1fr 3fr;
   gap: $gap-small;
-  *{
+
+  * {
     border-radius: $radius;
   }
 }

@@ -38,12 +38,13 @@ export default {
                 throw e;
             }
         },
-        async setUserInfoToDb({ rootState }, {name, email}) {
+        async setUserInfoToDb({ rootState }, {name, email, bill}) {
             try {
                 const db = getDatabase();
 
                 await set(ref(db, `users/${rootState.currentUserId}/info/name`), name);
                 await set(ref(db, `users/${rootState.currentUserId}/info/email`), email);
+                await set(ref(db, `users/${rootState.currentUserId}/info/bill`), bill);
             } catch (e) {
                 throw e;
             }

@@ -63,8 +63,6 @@ nav {
       .logout{
         color: red;
       }
-      .user{
-      }
     }
     select:focus{
       .user{

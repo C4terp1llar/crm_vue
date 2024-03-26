@@ -1,15 +1,72 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import {sendAlert} from "@/helpers/alertHelper";
+import {useStore} from "vuex";
+import AccountBalance from "@/components/account/AccountBalance.vue";
+import dateFilter from "../helpers/dateFilter";
+import AppLoader from "@/components/AppLoader.vue";
+import AccountCurrency from "@/components/account/AccountCurrency.vue";
 
+const store = useStore();
+
+const currency = ref(null);
+const date = ref('');
+const isLoading = ref(false);
+
+// const currency = {
+//   'RUB': 1,
+//   'EUR': 0.0092,
+//   'USD': 0.0098
+// }
+
+const bill = store.getters["info/getUserInfo"].bill;
+
+onMounted(async () => {
+  try {
+    isLoading.value = true;
+    await store.dispatch('currency/uploadCurrency');
+    currency.value = store.getters["currency/getCurrency"].rates;
+    date.value = store.getters["currency/getCurrency"].date
+  }catch (e){
+    sendAlert('Возникла ошибка при получении данных о валютах, попробуйте позже');
+    console.error(e.message);
+  }finally {
+    isLoading.value = false
+  }
+});
 </script>
 
 <template>
-<div>
-  <h1>account</h1>
-</div>
+
+  <app-loader v-if="isLoading"/>
+  <div v-else class="cont">
+    <account-balance
+        :currency="currency"
+        :bill="bill"
+    />
+    <account-currency
+        :currency="currency"
+        :date="date"
+    />
+  </div>
 </template>
 
 <style scoped lang="scss">
-div{
-  background-color: #52B788;
+@import "../assets/res";
+
+.cont {
+  width: 100%;
+  height: 100%;
+  gap: $gap-medium;
+  @include flexbox(flex, center, center, row);
+  background-color: $color8;
+  padding: $padding-large;
+
+  .currency-block, .balance-block {
+    background-color: $color10;
+    border-radius: $radius;
+    height: 100%;
+    padding: $padding-medium;
+  }
 }
 </style>

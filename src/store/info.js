@@ -9,17 +9,10 @@ export default {
         async getUserInfoFromDb({commit, rootState}) {
             try {
                 const db = getDatabase();
-                const [nameSnapshot, emailSnapshot] = await Promise.all([
-                    get(ref(db, `users/${rootState.currentUserId}/info/name`)),
-                    get(ref(db, `users/${rootState.currentUserId}/info/email`)),
-                ]);
 
-                const userInfo = {
-                    name: nameSnapshot.val(),
-                    email: emailSnapshot.val(),
-                };
+                const userInfoSnapshot = await get(ref(db, `users/${rootState.currentUserId}/info`));
 
-                commit('updateUserInfo', userInfo);
+                commit('updateUserInfo', userInfoSnapshot.val());
             } catch (e) {
                 throw e;
             }

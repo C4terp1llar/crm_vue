@@ -45,8 +45,10 @@ import {computed, ref} from "vue";
 }
 .error{
   color: darkred;
+  border: 2px solid darkred;
 }
 .success{
   color: green;
+  border: 2px solid green;
 }
 </style>

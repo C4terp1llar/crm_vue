@@ -8,6 +8,7 @@ import AppLoader from "@/components/AppLoader.vue";
 const login = ref(null);
 const password = ref(null);
 const name = ref(null);
+const bill = ref(null);
 
 const store = useStore();
 const router = useRouter();
@@ -15,14 +16,19 @@ const router = useRouter();
 const isLoading = ref(false);
 
 const valid = computed(() => {
-  return !(login.value && password.value && password.value.length >= 6)
+  return !(
+      login.value &&
+      name.value &&
+      bill.value &&
+      password.value &&
+      password.value.length >= 6)
 });
 
 async function handleSubmit() {
   try {
     isLoading.value = true;
 
-    await store.dispatch('auth/register', {email: login.value, password: password.value, name: name.value});
+    await store.dispatch('auth/register', {email: login.value, password: password.value, name: name.value, bill: bill.value});
     await router.push('/home');
     sendAlert('Регистрация успешна!', 'success');
   }catch (e){
@@ -43,6 +49,8 @@ async function handleSubmit() {
     <input id="login" v-model.trim="login" type="email">
     <label for="password">Введите пароль:</label>
     <input minlength="6" id="password" v-model.trim="password" type="password">
+    <label for="bill">Введите баланс, ₽:</label>
+    <input id="bill" v-model.trim="bill" type="number">
     <button type="submit" :disabled="valid || isLoading">
       <template v-if="isLoading">
         <app-loader/>

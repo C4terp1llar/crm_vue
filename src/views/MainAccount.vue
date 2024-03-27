@@ -13,11 +13,6 @@ const currency = ref(null);
 const date = ref('');
 const isLoading = ref(false);
 
-// const currency = {
-//   'RUB': 1,
-//   'EUR': 0.0092,
-//   'USD': 0.0098
-// }
 
 const bill = store.getters["info/getUserInfo"].bill;
 
@@ -63,6 +58,8 @@ onMounted(async () => {
   padding: $padding-large;
 
   .currency-block, .balance-block {
+    @include flexbox(flex,unset,center,column);
+    gap: $gap-small;
     background-color: $color10;
     border-radius: $radius;
     height: 100%;

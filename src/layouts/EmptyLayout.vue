@@ -20,9 +20,11 @@ export default {
 @import "../assets/res";
 
 .container {
+  width: 350px;
   @include flexbox(flex, center, center, column);
   padding: $padding-large;
   background-color: $color8;
   border-radius: $radius;
+  gap: $gap-small;
 }
 </style>

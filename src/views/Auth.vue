@@ -37,10 +37,13 @@ async function handleSubmit() {
 <template>
   <h1>Авторизация</h1>
   <form @submit.prevent="handleSubmit">
+
     <label for="login">Введите email:</label>
     <input id="login" type="email" v-model.trim="login">
+
     <label for="password">Введите пароль:</label>
     <input minlength="6" id="password" type="password" v-model.trim="password">
+
     <button type="submit" :disabled="valid || isLoading">
       <template v-if="isLoading">
         <app-loader/>
@@ -59,6 +62,7 @@ async function handleSubmit() {
 @import "../assets/res";
 
 form {
+  width: 100%;
   @include flexbox(flex, unset, unset, column);
   gap: 5px;
 

@@ -1,6 +1,8 @@
 <script setup>
 import AppNavbar from "@/components/AppNavbar.vue";
 import AppAside from "@/components/AppAside.vue";
+
+
 </script>
 
 <template>

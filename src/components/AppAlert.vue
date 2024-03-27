@@ -29,6 +29,7 @@ import {computed, ref} from "vue";
   background-color: $color8;
   padding: $padding-medium;
   border-radius: $radius;
+  border: 2px solid darken($color8,40%);
 
   bottom: 15px;
   right: -15px;

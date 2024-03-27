@@ -3,9 +3,10 @@ import auth from "@/store/auth";
 import alert from "@/store/alert";
 import info from "@/store/info";
 import currency from "@/store/currency";
+import category from "@/store/category";
 export default createStore({
   state: {
-    currentUserId: null
+    currentUserId: JSON.parse(sessionStorage.getItem('uuid'))
   },
   getters: {
     getCurrentUserId(state){
@@ -15,6 +16,7 @@ export default createStore({
   mutations: {
     setUserId(state, id){
       state.currentUserId = id;
+      sessionStorage.setItem('uuid', JSON.stringify(id));
     },
     logout(state){
       state.auth.authToken = null;
@@ -24,16 +26,15 @@ export default createStore({
       sessionStorage.removeItem('info');
 
       state.currentUserId = null;
+      sessionStorage.removeItem('uuid');
 
+      state.currency.currency = null;
 
-    },
-  },
-  actions: {
-    getUserId(state){
-      return state.currentUserId;
+      state.category.categories = null;
+      sessionStorage.removeItem('categories');
     },
   },
   modules: {
-    auth, info, alert, currency
+    auth, info, alert, currency, category
   }
 })

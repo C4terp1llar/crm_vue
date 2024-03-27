@@ -2,6 +2,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfi
 import { getDatabase, ref, set } from 'firebase/database';
 import { auth } from "@/main";
 import info from "@/store/info";
+import category from "@/store/category";
+
 
 export default {
     namespaced: true,
@@ -19,6 +21,7 @@ export default {
                 commit('setAuthToken', token);
 
                 await dispatch('info/getUserInfoFromDb');
+                await dispatch('category/getCategoriesFromDb');
             } catch (error) {
                 throw error;
             }
@@ -62,6 +65,6 @@ export default {
         }
     },
     modules: {
-        info
+        info, category
     }
 }

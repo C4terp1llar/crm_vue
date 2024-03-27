@@ -12,29 +12,25 @@ export default {
     mutations: {
         setCurrency(state, data){
             state.currency = data;
-
         }
     },
     actions: {
         async uploadCurrency({commit}){
             try {
-                const response = await fetch('https://api.apilayer.com/fixer/latest?base=RUB&symbols=RUB,EUR,USD', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'apikey': 'Uwqe9hhwlzt4Z8ZQ5BmUofpOpfofC9gW' // апи
-                    }
-                });
-
+                const response = await fetch('https://v6.exchangerate-api.com/v6/b417460063c8f9e36403b645/latest/RUB')
                 const data = await response.json();
 
                 const info = {
-                    'rates': data.rates,
-                    'date': data.date
+                    'rates': {
+                        'RUB': data.conversion_rates.RUB,
+                        'USD': data.conversion_rates.USD,
+                        'EUR': data.conversion_rates.EUR,
+                    },
+                    //'rates': data.conversion_rates, // это все курсы валют (мб потом выводить их все в список, но особого смысла пока нет, беру только основные валюты)
+                    'date': data.time_last_update_utc,
                 }
 
                 commit('setCurrency', info);
-
-
             }catch (e){
                 throw e;
             }

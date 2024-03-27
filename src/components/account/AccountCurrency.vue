@@ -11,7 +11,7 @@ defineProps({
 
 <template>
   <div class="currency-block">
-    <h2>Актуальный курс валют:</h2>
+    <h2>Актуальный курс валют</h2>
     <table>
       <thead>
       <tr>
@@ -36,8 +36,6 @@ defineProps({
 
 .currency-block {
   width: 70%;
-  @include flexbox(flex, unset,unset, column);
-  gap: $gap-small;
 
   table {
     width: 100%;

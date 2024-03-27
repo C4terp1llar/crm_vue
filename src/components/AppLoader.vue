@@ -18,8 +18,8 @@
   border: 3px solid $color8;
   border-top: 3px solid $color10;
   border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   animation: spin .8s linear infinite;
 }
 

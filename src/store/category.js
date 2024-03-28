@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import {getDatabase, ref, push, get, set} from "firebase/database";
-=======
-import {getDatabase, ref, push, get} from "firebase/database";
->>>>>>> 122e114077b6efae1d1246ce5c7fcd2a6aadbffb
-
 export default {
     namespaced: true,
     state: {
@@ -36,12 +31,11 @@ export default {
                 throw e;
             }
         },
-<<<<<<< HEAD
         async editCategory({rootState, dispatch}, {id, newLimit, newTitle}) {
             try {
                 const db = getDatabase();
 
-                if (newTitle){
+                if (newTitle){ // условие, если передается имя и если нет
                     await set(ref(db, `users/${rootState.currentUserId}/categories/${id}`), {
                         limit: newLimit,
                         title: newTitle
@@ -55,8 +49,6 @@ export default {
                 throw e;
             }
         },
-=======
->>>>>>> 122e114077b6efae1d1246ce5c7fcd2a6aadbffb
     },
     getters: {
         getCategories(state){

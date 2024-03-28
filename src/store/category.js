@@ -1,4 +1,4 @@
-import {getDatabase, ref, push, get} from "firebase/database";
+import {getDatabase, ref, push, get, set} from "firebase/database";
 
 export default {
     namespaced: true,
@@ -28,6 +28,24 @@ export default {
                 const categoriesSnapshot = await get(ref(db, `users/${rootState.currentUserId}/categories`));
 
                 commit('setCategories', categoriesSnapshot.val());
+            } catch (e) {
+                throw e;
+            }
+        },
+        async editCategory({rootState, dispatch}, {id, newLimit, newTitle}) {
+            try {
+                const db = getDatabase();
+
+                if (newTitle){
+                    await set(ref(db, `users/${rootState.currentUserId}/categories/${id}`), {
+                        limit: newLimit,
+                        title: newTitle
+                    });
+                }else{
+                    await set(ref(db, `users/${rootState.currentUserId}/categories/${id}/limit`), newLimit);
+                }
+
+                await dispatch('getCategoriesFromDb');
             } catch (e) {
                 throw e;
             }

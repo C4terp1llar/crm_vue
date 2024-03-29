@@ -1,17 +1,11 @@
 <script setup>
-import AppLoader from "@/components/AppLoader.vue";
-import {ref} from "vue";
 import CategoryCreate from "@/components/categories/CategoryCreate.vue";
 import CategoryEdit from "@/components/categories/CategoryEdit.vue";
-
-const isLoading = ref(false);
-
 
 </script>
 
 <template>
-  <app-loader v-if="isLoading"/>
-  <div v-else class="cont">
+  <div class="cont">
     <category-create />
     <category-edit />
   </div>
@@ -28,6 +22,7 @@ const isLoading = ref(false);
   padding: $padding-large;
   .block{
     @include flexbox(flex, unset, center, column);
+    gap: $gap-small;
     width: 50%;
     background-color: $color10;
     border-radius: $radius;

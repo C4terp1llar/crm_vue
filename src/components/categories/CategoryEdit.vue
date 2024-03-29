@@ -47,7 +47,7 @@ const handleChange = (actualLimit, actualTitle) => {
     limit.value = actualLimit;
   }
 }
-async function handleSubmit() {
+async function handleSubmit(event) {
   try {
     isLoading.value = true;
     if (changeTitleFlag.value){
@@ -84,7 +84,7 @@ async function handleSubmit() {
       <label for="title">Выберите категорию:</label>
 
       <select id="title" v-model="categoryId" @change="handleChange(categories[categoryId].limit, categories[categoryId].title)">
-        <option v-if="!categories" disabled selected>Категорий нет</option>
+        <option v-if="!categories" disabled selected>Категорий пока нет</option>
         <option v-else v-for="(cat, id) in categories" :key="id" :value="id">{{cat.title}}</option>
       </select>
 

@@ -1,4 +1,4 @@
-import {getDatabase, ref, get} from "firebase/database";
+import {getDatabase, ref, get, set} from "firebase/database";
 
 export default {
     namespaced: true,
@@ -12,14 +12,33 @@ export default {
 
                 const userInfoSnapshot = await get(ref(db, `users/${rootState.currentUserId}/info`));
 
-                commit('updateUserInfo', userInfoSnapshot.val());
+                commit('setUserInfo', userInfoSnapshot.val());
             } catch (e) {
                 throw e;
+            }
+        },
+        async updateUserInfo({dispatch, rootState, getters}, {type, manipulateBill}){
+            try {
+                const db = getDatabase();
+
+                let actualBill = null;
+
+                if (type === 'income'){
+                    actualBill = manipulateBill + getters.getUserInfo.bill
+                }else{
+                    actualBill = getters.getUserInfo.bill - manipulateBill;
+                }
+
+                await set(ref(db, `users/${rootState.currentUserId}/info/bill`), actualBill);
+
+                await dispatch('getUserInfoFromDb');
+            }catch (e){
+                throw e
             }
         }
     },
     mutations: {
-        updateUserInfo(state, info) {
+        setUserInfo(state, info) {
             state.userInfo = info;
             sessionStorage.setItem('info', JSON.stringify(info));
         }

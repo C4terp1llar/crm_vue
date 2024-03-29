@@ -31,21 +31,27 @@ export default {
                 throw e;
             }
         },
-        async editCategory({rootState, dispatch}, {id, newLimit, newTitle}) {
+        async editCategory({rootState, dispatch, getters}, payload) {
             try {
                 const db = getDatabase();
 
-                if (newTitle){ // условие, если передается имя и если нет
+                const id = payload.id ? payload.id : payload.categoryId;
+                // const limit = payload.newLimit ? payload.newLimit : getters.getCategories[id].limit - payload.manipulateBill;
+
+                if (payload.newTitle){
                     await set(ref(db, `users/${rootState.currentUserId}/categories/${id}`), {
-                        limit: newLimit,
-                        title: newTitle
+                        limit: payload.newLimit,
+                        title: payload.newTitle
                     });
-                }else{
-                    await set(ref(db, `users/${rootState.currentUserId}/categories/${id}/limit`), newLimit);
+                }else if (!payload.newTitle && payload.newLimit) {
+                    await set(ref(db, `users/${rootState.currentUserId}/categories/${id}/limit`), payload.newLimit);
+                }else if (!payload.newTitle && payload.manipulateBill && payload.categoryId){
+                    await set(ref(db, `users/${rootState.currentUserId}/categories/${id}/limit`), getters.getCategories[id].limit - payload.manipulateBill);
                 }
 
                 await dispatch('getCategoriesFromDb');
             } catch (e) {
+                console.log('error here')
                 throw e;
             }
         },

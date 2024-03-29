@@ -4,6 +4,7 @@ import alert from "@/store/alert";
 import info from "@/store/info";
 import currency from "@/store/currency";
 import category from "@/store/category";
+import entries from "@/store/entries";
 export default createStore({
   state: {
     currentUserId: JSON.parse(sessionStorage.getItem('uuid'))
@@ -32,9 +33,12 @@ export default createStore({
 
       state.category.categories = null;
       sessionStorage.removeItem('categories');
+
+      state.entries.entries = null;
+      sessionStorage.removeItem('entries');
     },
   },
   modules: {
-    auth, info, alert, currency, category
+    auth, info, alert, currency, category, entries
   }
 })

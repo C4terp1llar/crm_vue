@@ -4,7 +4,6 @@ import { auth } from "@/main";
 import info from "@/store/info";
 import category from "@/store/category";
 
-
 export default {
     namespaced: true,
     state:{

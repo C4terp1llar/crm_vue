@@ -35,7 +35,6 @@ export default createStore({
       sessionStorage.removeItem('categories');
 
       state.entries.entries = null;
-      sessionStorage.removeItem('entries');
     },
   },
   modules: {

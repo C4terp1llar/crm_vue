@@ -26,7 +26,9 @@ export default {
                 const db = getDatabase();
                 const categoriesSnapshot = await get(ref(db, `users/${rootState.currentUserId}/categories`));
 
-                commit('setCategories', categoriesSnapshot.val());
+                if (categoriesSnapshot.val()){
+                    commit('setCategories', categoriesSnapshot.val());
+                }
             } catch (e) {
                 throw e;
             }

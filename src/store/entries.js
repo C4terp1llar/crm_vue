@@ -1,14 +1,14 @@
 import info from "@/store/info";
-import {getDatabase, push, ref} from "firebase/database";
+import {get, getDatabase, push, ref} from "firebase/database";
 import category from "@/store/category";
 
 export default {
     namespaced: true,
     state: {
-        entries: JSON.parse(sessionStorage.getItem('entries'))
+        entries: null
     },
     actions: {
-        async createEntry({dispatch, rootState}, {type, manipulateBill, description, categoryId, date}){
+        async createEntry({dispatch, rootState, commit}, {type, manipulateBill, description, categoryId, date}){
             try {
                 const db = getDatabase();
 
@@ -32,18 +32,30 @@ export default {
                 }
 
                 await push(ref(db, `users/${rootState.currentUserId}/entries`), data);
+
                 await dispatch('info/updateUserInfo', {type, manipulateBill});
                 await dispatch('category/editCategory', {categoryId, manipulateBill});
 
+                await dispatch('getEntriesFromDb');
             }catch (e){
                 throw e
+            }
+        },
+        async getEntriesFromDb({rootState, commit}){
+            try {
+                const db = getDatabase();
+
+                const entriesSnapshot = await get(ref(db, `users/${rootState.currentUserId}/entries`));
+
+                commit('setEntries', entriesSnapshot.val());
+            }catch (e){
+                throw e;
             }
         }
     },
     mutations: {
         setEntries(state, data){
-            state.categories = data;
-            sessionStorage.setItem('entries', JSON.stringify(data));
+            state.entries = data;
         }
     },
     getters: {

@@ -4,6 +4,7 @@ import {useStore} from "vuex";
 import {filterNonDigits} from "@/helpers/inputFilter";
 import AppLoader from "@/components/AppLoader.vue";
 import {sendAlert} from "@/helpers/alertHelper";
+import dateFilter from "../../helpers/dateFilter";
 
 const store = useStore();
 
@@ -41,10 +42,6 @@ const valid = computed(() => {
 });
 async function handleSubmit () {
   try {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
-
-
     isLoading.value = true;
 
     await store.dispatch('entries/createEntry', {
@@ -52,7 +49,7 @@ async function handleSubmit () {
       manipulateBill: sum.value,
       description: description.value,
       categoryId: categoryId.value,
-      date: formattedDate
+      date: dateFilter(new Date())
     })
 
   } catch (e) {
@@ -81,7 +78,7 @@ async function handleSubmit () {
           <input id="income-radio-btn" type="radio" value="income" v-model="radio">
         </div>
 
-        <div class="radio-block">
+        <div class="radio-block" v-if="categories">
           <span>Расход</span>
           <input id="expense-radio-btn" type="radio" value="expense" v-model="radio">
         </div>

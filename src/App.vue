@@ -19,11 +19,11 @@ import AppAlert from "@/components/AppAlert.vue";
 html, body{
   width: 100%;
   height: 100%;
+  background-color: $color10;
 }
 #app{
   width: 100%;
   height: 100%;
-  background-color: $color10;
   @include flexbox(flex,center,center,row);
 }
 </style>

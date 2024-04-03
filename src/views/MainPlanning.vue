@@ -50,7 +50,8 @@ onMounted(async () => {
 <template>
   <app-loader v-if="isLoading"/>
   <div v-else class="cont">
-    <div class="block">
+    <div v-if="!entries">Записей пока нет. <router-link to="/home/new">Новая запись</router-link></div>
+    <div v-else class="block">
       <div class="balance">
         <h2>Ваш баланс</h2>
         <h2>{{currencyFilter(currentBalance)}}</h2>
@@ -82,7 +83,7 @@ onMounted(async () => {
               ></div>
             </div>
           </div>
-          <button @click="toggleParagraph(catIndex)">Подробнее...</button>
+          <button @click="toggleParagraph(catIndex)">&#128073;</button>
           <p v-if="showParagraph[catIndex]">
             Потрачено: {{ currencyFilter(getSpentSum(catIndex)) }}
             из {{ currencyFilter(category.limit + getSpentSum(catIndex)) }} ({{ getSpentPercent(catIndex) }}%).

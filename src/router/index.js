@@ -31,7 +31,15 @@ const routes = [
       {
         path: '/home/history',
         name: 'history',
-        component: () => import('../views/MainHistory.vue')
+        component: () => import('../views/MainHistory.vue'),
+        children: [
+          {
+            path: ':entryId',
+            name: 'entryInfo',
+            component: () => import('../views/EntryInfo.vue'),
+            props: true
+          }
+        ]
       },
       {
         path: '/home/planning',
@@ -52,7 +60,7 @@ const routes = [
         path: '/home/profile',
         name: 'profile',
         component: () => import('../views/MainProfile.vue')
-      }
+      },
     ]
   },
   {

@@ -6,8 +6,11 @@ import CategoryEdit from "@/components/categories/CategoryEdit.vue";
 
 <template>
   <div class="cont">
-    <category-create />
-    <category-edit />
+    <div class="block">todo</div>
+    <div class="block">
+      <category-create />
+      <category-edit />
+    </div>
   </div>
 </template>
 
@@ -22,7 +25,7 @@ import CategoryEdit from "@/components/categories/CategoryEdit.vue";
   padding: $padding-large;
   .block{
     @include flexbox(flex, unset, center, column);
-    gap: $gap-small;
+    gap: $gap-medium;
     width: 50%;
     background-color: $color10;
     border-radius: $radius;

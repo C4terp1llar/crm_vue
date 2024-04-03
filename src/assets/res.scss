@@ -30,7 +30,11 @@ $gap-large: 50px;
 $radius: 10px;
 
 .active-link{
-  color: $active-link-color;
+  color: darken($active-link-color, 10%);
+  text-decoration: underline;
+}
+.exact-active-link{
+  color: darkred;
   text-decoration: underline;
 }
 a{

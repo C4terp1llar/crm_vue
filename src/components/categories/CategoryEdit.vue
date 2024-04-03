@@ -132,6 +132,9 @@ form {
   width: 100%;
   @include flexbox(flex, unset, unset, column);
   gap: 5px;
+  padding: $padding-small;
+  border: 1px solid $color8;
+  border-radius: $radius;
 
   input, button, select {
     padding: 5px;

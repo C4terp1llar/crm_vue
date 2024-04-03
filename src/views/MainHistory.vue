@@ -5,6 +5,7 @@ import {useStore} from "vuex";
 import {sendAlert} from "@/helpers/alertHelper";
 import {useRoute} from "vue-router";
 import HistoryList from "@/components/history/HistoryList.vue";
+import HistoryChart from "@/components/history/HistoryChart.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -28,10 +29,13 @@ onMounted(async () => {
 
 <template>
   <app-loader v-if="isLoading"/>
-  <div v-else-if="!store.getters['entries/getEntries']">Истории пока нет. <router-link to="/home/new">Новая запись</router-link></div>
+  <div class="cont" v-else-if="!store.getters['entries/getEntries']">
+    <div>Истории пока нет. <router-link to="/home/new">Новая запись</router-link></div>
+  </div>
   <div v-else>
     <router-view v-if="routerFlag"/>
     <div v-else class="cont">
+      <history-chart />
       <history-list />
     </div>
   </div>
@@ -44,7 +48,7 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   gap: $gap-medium;
-  @include flexbox(flex, center, center, row);
+  @include flexbox(flex, center, center, column);
   background-color: $color8;
   padding: $padding-large;
   border-radius: $radius;

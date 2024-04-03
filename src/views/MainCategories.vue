@@ -1,12 +1,15 @@
 <script setup>
 import CategoryCreate from "@/components/categories/CategoryCreate.vue";
 import CategoryEdit from "@/components/categories/CategoryEdit.vue";
+import CategoriesList from "@/components/categories/CategoriesList.vue";
 
 </script>
 
 <template>
   <div class="cont">
-    <div class="block">todo</div>
+    <div class="block">
+      <categories-list />
+    </div>
     <div class="block">
       <category-create />
       <category-edit />

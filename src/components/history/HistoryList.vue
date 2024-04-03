@@ -3,6 +3,7 @@ import currencyFilter from "@/helpers/currencyFilter";
 import {computed} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
+import usePagination from "@/helpers/paginationHelper";
 
 const store = useStore();
 const router = useRouter();
@@ -23,6 +24,10 @@ const handleClick = (id = 'income') => {
     }
   });
 }
+
+const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagination(entries, {
+  pageSize: 5, // Настройка количества элементов на странице
+});
 </script>
 
 <template>
@@ -30,7 +35,6 @@ const handleClick = (id = 'income') => {
     <table>
       <thead>
       <tr>
-        <th>#</th>
         <th>Сумма</th>
         <th>Дата</th>
         <th>Категория</th>
@@ -39,24 +43,28 @@ const handleClick = (id = 'income') => {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(entry, id, i) in entries" :key="id">
-        <td>{{i+=1}}</td>
+      <tr v-for="item in paginatedData" :key="item[0]">
 
-        <td>{{currencyFilter(entry.val)}}</td>
+        <td>{{currencyFilter(item[1].val)}}</td>
 
-        <td>{{entry.date}}</td>
+        <td>{{item[1].date}}</td>
 
-        <td>{{getCategoryInfo(entry.categoryId)}}</td>
+        <td>{{getCategoryInfo(item[1].categoryId)}}</td>
 
         <td
-            :style="{color: entry.type === 'income' ? 'green' : 'darkred'}"
+            :style="{color: item[1].type === 'income' ? 'green' : 'darkred'}"
         >
-          {{entry.type === 'income' ? 'Доход' : 'Расход'}}
+          {{item[1].type === 'income' ? 'Доход' : 'Расход'}}
         </td>
-        <td><button @click="handleClick(id)">	&#128073;</button></td>
+        <td><button @click="handleClick(item[0])"> &#128073;</button></td>
       </tr>
       </tbody>
     </table>
+    <div class="pagination-block">
+      <button @click="prevPage" :disabled="currentPage === 1">&#8592;</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button @click="nextPage" :disabled="currentPage === totalPages">&#8594;</button>
+    </div>
   </div>
 </template>
 
@@ -71,6 +79,15 @@ const handleClick = (id = 'income') => {
   border-radius: $radius;
   height: 100%;
   padding: $padding-medium;
+  .pagination-block{
+    @include flexbox(flex, center, center, row);
+    gap: $gap-small;
+    button{
+      background-color: $color10;
+      cursor: pointer;
+      border:none;
+    }
+  }
   table {
     width: 100%;
     border-collapse: collapse;

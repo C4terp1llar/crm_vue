@@ -21,7 +21,7 @@ import NewEntry from "@/components/new/NewEntry.vue";
   padding: $padding-large;
   .block{
     @include flexbox(flex, unset, center, column);
-    gap: $gap-small;
+    gap: $gap-medium;
     width: 100%;
     background-color: $color10;
     border-radius: $radius;

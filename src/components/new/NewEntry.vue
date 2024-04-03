@@ -126,6 +126,9 @@ form {
   width: 50%;
   @include flexbox(flex, unset, unset, column);
   gap: 5px;
+  padding: $padding-small;
+  border: 1px solid $color8;
+  border-radius: $radius;
 
   .radio-block {
     display: flex;

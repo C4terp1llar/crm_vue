@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import { useRouter } from "vue-router";
 import {useStore} from "vuex";
 
@@ -7,7 +7,7 @@ const actionModel = ref(null);
 const router = useRouter();
 const store = useStore()
 
-const info = store.getters["info/getUserInfo"];
+const info = computed(() => store.getters["info/getUserInfo"]);
 
 const handleAction = (action) => {
   if (action === 'profile') {

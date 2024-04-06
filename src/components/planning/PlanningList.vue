@@ -39,7 +39,7 @@ const toggleParagraph = (index) => {
 }
 
 const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagination(categories, {
-  pageSize: 3, // Настройка количества элементов на странице
+  pageSize: 5, // Настройка количества элементов на странице
 });
 </script>
 

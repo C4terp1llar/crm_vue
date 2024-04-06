@@ -17,25 +17,29 @@ export default {
                 throw e;
             }
         },
-        async updateUserInfo({dispatch, rootState, getters}, {type, manipulateBill}){
+        async updateUserInfo({dispatch, rootState, getters}, {type, manipulateBill, name}){
             try {
                 const db = getDatabase();
 
-                let actualBill = null;
+                if (type){
+                    let actualBill = null;
 
-                if (type === 'income'){
-                    actualBill = manipulateBill + getters.getUserInfo.bill
-                }else{
-                    actualBill = getters.getUserInfo.bill - manipulateBill;
+                    if (type === 'income'){
+                        actualBill = manipulateBill + getters.getUserInfo.bill
+                    }else{
+                        actualBill = getters.getUserInfo.bill - manipulateBill;
+                    }
+
+                    await set(ref(db, `users/${rootState.currentUserId}/info/bill`), actualBill);
+                }else {
+                    await set(ref(db, `users/${rootState.currentUserId}/info/name`),name);
                 }
-
-                await set(ref(db, `users/${rootState.currentUserId}/info/bill`), actualBill);
 
                 await dispatch('getUserInfoFromDb');
             }catch (e){
                 throw e
             }
-        }
+        },
     },
     mutations: {
         setUserInfo(state, info) {

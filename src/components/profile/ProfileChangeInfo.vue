@@ -59,6 +59,14 @@ async function handleSubmit () {
   border-radius: $radius;
   height: 100%;
   padding: $padding-medium;
+  @media (max-width: 859px) {
+    width: 100%;
+  }
+  @media (max-width: 859px) {
+    h2{
+      font-size: 20px;
+    }
+  }
   form {
     width: 100%;
     @include flexbox(flex, unset, unset, column);

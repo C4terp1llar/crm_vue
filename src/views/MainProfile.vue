@@ -22,6 +22,9 @@ import ProfileChangeInfo from "@/components/profile/ProfileChangeInfo.vue";
   background-color: $color8;
   padding: $padding-large;
   border-radius: $radius;
+  @media (max-width: 859px) {
+    @include flexbox(flex, center, center, column);
+  }
   form {
     width: 50%;
     @include flexbox(flex, unset, unset, column);
@@ -29,6 +32,10 @@ import ProfileChangeInfo from "@/components/profile/ProfileChangeInfo.vue";
     padding: $padding-small;
     border: 1px solid $color8;
     border-radius: $radius;
+
+    @media (max-width: 859px) {
+      width: 100%;
+    }
 
     .radio-block {
       display: flex;

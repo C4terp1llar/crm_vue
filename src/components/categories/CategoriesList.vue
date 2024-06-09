@@ -53,6 +53,10 @@ const { currentPage, totalPages, paginatedData, nextPage, prevPage } = usePagina
       background-color: $color10;
       cursor: pointer;
       border:none;
+
+      @media (max-width: 859px) {
+        font-size: 24px;
+      }
     }
   }
 }

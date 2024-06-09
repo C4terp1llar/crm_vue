@@ -33,6 +33,14 @@ const info = computed(() => store.getters["info/getUserInfo"])
   border-radius: $radius;
   height: 100%;
   padding: $padding-medium;
+  @media (max-width: 859px) {
+    width: 100%;
+  }
+  @media (max-width: 859px) {
+    h2{
+      font-size: 20px;
+    }
+  }
   .wrap{
     width: 100%;
     @include flexbox(flex, unset, unset, column);

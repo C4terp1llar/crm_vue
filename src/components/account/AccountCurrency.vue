@@ -36,7 +36,11 @@ defineProps({
 
 .currency-block {
   width: 70%;
-
+  @media (max-width: 859px) {
+    h2{
+      font-size: 18px;
+    }
+  }
   table {
     width: 100%;
     border-collapse: collapse;

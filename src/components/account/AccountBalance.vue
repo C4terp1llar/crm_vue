@@ -25,7 +25,11 @@ defineProps({
 
 .balance-block {
   width: 30%;
-
+  @media (max-width: 859px) {
+    h2{
+      font-size: 18px;
+    }
+  }
   ul {
     width: 100%;
     @include flexbox(flex,unset,unset,column);

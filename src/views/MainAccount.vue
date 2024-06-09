@@ -56,7 +56,9 @@ onMounted(async () => {
   @include flexbox(flex, center, center, row);
   background-color: $color8;
   padding: $padding-large;
-
+  @media (max-width: 859px) {
+    @include flexbox(flex, center, center, column);
+  }
   .currency-block, .balance-block {
     @include flexbox(flex,unset,center,column);
     gap: $gap-small;
@@ -64,6 +66,9 @@ onMounted(async () => {
     border-radius: $radius;
     height: 100%;
     padding: $padding-medium;
+    @media (max-width: 859px) {
+      width: 100%;
+    }
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import {computed, ref} from "vue";
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 
 const actionModel = ref(null);
@@ -29,7 +29,7 @@ const handleAction = (action) => {
     <div class='wrap'>
       <select v-model="actionModel" @change="handleAction(actionModel)">
         <option :value="null" disabled selected class="user">
-          {{info.email}} {{info.email && info.name ? '|' : ''}} {{info.name }}
+          {{ info.email }} {{ info.email && info.name ? '|' : '' }} {{ info.name }}
         </option>
         <option value="profile">Профиль</option>
         <option class="logout" value="logout">Выйти</option>
@@ -47,9 +47,14 @@ nav {
   background-color: $color8;
   padding: $padding-large;
   @include flexbox(flex, space-between, center, row);
+
+  @media (max-width: 859px) {
+    grid-column: span 1;
+  }
   .wrap {
     position: relative;
     @include flexbox(flex, unset, center, row);
+
     select {
       background-color: $color8;
       border: 1px solid black;
@@ -60,15 +65,18 @@ nav {
       padding: 10px 25px 10px 10px;
       cursor: pointer;
       font-size: 16px;
-      .logout{
+
+      .logout {
         color: red;
       }
     }
-    select:focus{
-      .user{
+
+    select:focus {
+      .user {
         display: none;
       }
     }
+
     span {
       height: 9px;
       font-size: 10px;
@@ -78,12 +86,16 @@ nav {
       cursor: pointer;
       font-weight: bold;
     }
+
+
   }
-  .logo{
+
+  .logo {
     position: relative;
     width: 50px;
     height: 50px;
-    a{
+
+    a {
       position: absolute;
       top: 0;
       left: 0;
@@ -91,5 +103,6 @@ nav {
       height: 100%;
     }
   }
+
 }
 </style>

@@ -129,6 +129,9 @@ button{
   background-color: $color10;
   cursor: pointer;
   border:none;
+  @media (max-width: 859px) {
+    font-size: 24px;
+  }
 }
 .line-wrap{
   width: 100%;

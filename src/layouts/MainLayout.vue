@@ -27,5 +27,10 @@ import AppAside from "@/components/AppAside.vue";
   * {
     border-radius: $radius;
   }
+
+  @media (max-width: 859px) {
+    grid-template-rows: 100px 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
 }
 </style>

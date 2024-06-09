@@ -129,6 +129,9 @@ form {
   padding: $padding-small;
   border: 1px solid $color8;
   border-radius: $radius;
+  @media (max-width: 859px) {
+    width: 100%;
+  }
 
   .radio-block {
     display: flex;

@@ -26,6 +26,9 @@ import CategoriesList from "@/components/categories/CategoriesList.vue";
   @include flexbox(flex, center, center, row);
   background-color: $color8;
   padding: $padding-large;
+  @media (max-width: 859px) {
+    @include flexbox(flex, center, center, column);
+  }
   .block{
     @include flexbox(flex, unset, center, column);
     gap: $gap-medium;
@@ -34,6 +37,10 @@ import CategoriesList from "@/components/categories/CategoriesList.vue";
     border-radius: $radius;
     height: 100%;
     padding: $padding-medium;
+    @media (max-width: 859px) {
+      width: 100%;
+
+    }
   }
 }
 </style>
